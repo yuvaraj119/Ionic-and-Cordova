@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Dish } from './../../shared/dish';
 import { DishProvider } from './../dish/dish';
 import { Storage } from '@ionic/storage';
-import { LocalNotifications } from '@ionic-native/local-notifications'
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import 'rxjs/add/operator/map';
 
 /*
@@ -42,7 +42,7 @@ export class FavoriteProvider {
       this.storage.set('favorites',this.favorites);
 
       this.localNotifications.schedule({
-        id: 1,
+        id: id,
         text: 'Dish '+id+' added as a favorite successfully'
       });
     }
@@ -55,12 +55,6 @@ export class FavoriteProvider {
   }
 
   getFavorites(): Observable<Dish[]>{
-    this.localNotifications.schedule({
-      id: 1,
-      text: 'Dish added as a favorite successfully',
-      icon: 'ic_notifications',
-      smallIcon: 'ic_notifications_small'
-    });
     return this.dishservice.getDishes()
       .map(dishes => dishes.filter(dish => this.favorites.some(el => el === dish.id)));
   }
